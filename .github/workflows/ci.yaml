@@ -61,9 +61,9 @@ jobs:
        vuln-type: 'os,library'
        severity: 'CRITICAL,HIGH'
    - name: Upload Security Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
+     if: always()
+     uses: actions/upload-artifact@v4
+       with:
           name: makhan-security-reports
           path: |
             sbom.json

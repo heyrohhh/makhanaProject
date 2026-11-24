@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     if:  github.event.workflow_run.conclusion == 'success'
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
 
     steps:
      - name: checkout
@@ -21,10 +21,10 @@ jobs:
      - name: Setup ssh
        run: | 
           sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          docker pull heyrohhh/makhan:latest
+          docker pull heyrohhh/makhan:${{ github.event.workflow_run.head_sha }}
           docker stop makhan || true
           docker rm makhan || true
-          docker run -d --name makhan -p 3000:3000 heyrohhh/makhan:latest
+          docker run -d --name makhan -p 3000:3000 heyrohhh/makhan:${{ github.event.workflow_run.head_sha }}
          
 
 

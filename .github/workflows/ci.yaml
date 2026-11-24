@@ -68,5 +68,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Docker Image
-        if: success() && matrix.node-version == '22.x' && github.event_name == 'push'
         run: docker push heyrohhh/makhan:${{ github.sha }}

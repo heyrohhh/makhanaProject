@@ -39,15 +39,16 @@ jobs:
           format: cyclonedx-json
           output-file: sbom.json
 
-      - name: Trivy SBOM Scan
+      - name: Trivy Image Scan
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: sbom
-          input: sbom.json
-          format: json
-          output: trivy-report.json
-          exit-code: '1'
-          severity: 'CRITICAL,HIGH'
+         image-ref: heyrohhh/makhan:${{ github.sha }}
+         format: json
+         output: trivy-report.json
+         exit-code: '1'
+         ignore-unfixed: true
+         vuln-type: 'os,library'
+         severity: 'CRITICAL,HIGH'
 
       - name: Upload Security Reports
         if: always()
